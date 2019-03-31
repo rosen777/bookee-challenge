@@ -1,6 +1,6 @@
 # BookeeChallenge
 
-The purpose of this challenge is to fetch a list of users. On the left part of the list, the user’s email and id should appear in the following order (one below the other). On the right part of list, a Button or TouchableOpacity that displays the user’s name in an alert should appear.
+The purpose of this challenge is to fetch a list of users. On the left part of the list, the user’s email and id should appear in the following order (one below the other). On the right part of list, a Button or a TouchableOpacity that displays the user’s name in an alert should appear.
 
 
 ## Getting Started
@@ -18,9 +18,9 @@ cd bookee-challenge
 ```
 react-native run-ios
 ```
-4) If on both Mac or PC, follow the steps on this linke (https://facebook.github.io/react-native/docs/getting-started/) to install Java SE Development Kit (JDK), Android Studio, Android SDK. <br/>
+4) If on both Mac or PC, follow the steps on this link (https://facebook.github.io/react-native/docs/getting-started/) to install Java SE Development Kit (JDK), Android Studio, Android SDK. <br/>
 
-Folling this, run react-native run-android to view in an Android simulator.
+Following this, run react-native run-android to view in an Android simulator.
 ```
 react-native run-android
 ```
