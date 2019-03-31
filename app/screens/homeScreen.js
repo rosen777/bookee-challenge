@@ -2,48 +2,10 @@ import React, { Component } from 'react'
 import { ScrollView, Button, View, Text, StyleSheet, FlatList, StatusBar} from 'react-native'
 
 export default class App extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            users: [
-                {
-                    name: "John",
-                    email: "anotherrollerinthenight@email.com",
-                    id: 1
-                },
-                {
-                    name: "Sindey",
-                    email: "anotherrollerinthenight@email.com",
-                    id: 2
-                },
-                {
-                    name: "Kim",
-                    email: "anotherrollerinthenight@email.com",
-                    id: 3
-                }
-            ],
+    state= {
             list: [],
             refresh: true,
-            email: [],
-            name: [],
-            id: [],
-            user: {
-                id: 0,
-                name: '',
-                email: '',
-            }
         }
-
-        this.fetchUsers()
-    }
-
-    fetchUsers = () => {
-        var newList = []
-        var list = this.getRandom(this.state.users, 7)
-        for (user in list) {
-            this.fetchCityUser(newList)
-        }
-    }
 
     getRandom = (arr, n) => {
         var result = new Array(n),
@@ -57,33 +19,41 @@ export default class App extends Component {
         return result;
     }
 
+   
+
+    fetchUsers = (newList) => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+          .then(res => res.json())
+          .then(responseJson => {
+            var obj = responseJson;
+            var users = []
+            obj.forEach((obj) => {
+                users.push({
+                    name: obj.name,
+                    email: obj.email,
+                    id: obj.id
+                })
+            })
+
+            newList = this.getRandom(users, 7)
+            this.setState({
+              list: newList,
+              refresh: false
+            });
+     
+          })
+    }
+
+    componentWillMount() {
+        this.fetchUsers()
+    }
+
     loadNewUsers = () => {
         this.setState({
             list: [],
             refresh: true
         })
         this.fetchUsers();
-    }
-
-
-    fetchCityUser = (newList) => {
-        fetch("https://jsonplaceholder.typicode.com/users")
-          .then(res => res.json())
-          .then(responseJson => {
-            var obj = responseJson;
-            var user = {};
-            this.setState({
-              user: obj
-            });
-
-            newList.push(this.state.user);
-            this.setState({
-              list: newList,
-              refresh: false
-            });
-            console.log('before', this.state.user)
-            console.log("after", this.state.list);
-          });
     }
 
     render() {
@@ -115,13 +85,20 @@ export default class App extends Component {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <View style={styles.row}>
-                  <Text style={styles.CityN}>
-                    {item.id} – {item.email}
-                  </Text>
-                  <Button
-                    title="Name"
-                    onPress={() => alert(item.name)}
-                  />
+                    <View style={styles.userRow}>
+                        <Text style={styles.UserInfo}>
+                            {item.email}
+                        </Text>
+                        <Text style={styles.UserInfo}>
+                            {item.id}
+                        </Text>
+                    </View>
+                    <View style={styles.row}>
+                    <Button
+                        title="Name"
+                        onPress={() => alert(item.name)}
+                    />
+                    </View>
                 </View>
               )}
             />
@@ -132,24 +109,29 @@ export default class App extends Component {
 
 
 const styles = StyleSheet.create({
-    cityN: {
-        fontSize: 20,
-        lineHeight: 40,
-        fontFamily: 'Avenir',
-    },
-    row: {
-        flex: 1,
-        paddingVertical: 25,
-        paddingHorizontal: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderBottomWidth: 1,
-        borderBottomColor: 'white'
-    },
-    container: {
-        backgroundColor: '#fff',
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1
-    }
+  userInfo: {
+    fontSize: 20,
+    lineHeight: 40,
+    fontFamily: "Avenir"
+  },
+  userRow: {
+    flex: 2,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  row: {
+    flex: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    borderBottomWidth: 1,
+    borderBottomColor: "white"
+  },
+  container: {
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+  }
 });
