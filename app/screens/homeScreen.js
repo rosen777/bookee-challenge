@@ -93,7 +93,7 @@ export default class App extends Component {
                             {item.id}
                         </Text>
                     </View>
-                    <View style={styles.row}>
+                      <View style={styles.nameRow}>
                     <Button
                         title="Name"
                         onPress={() => alert(item.name)}
@@ -126,7 +126,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     borderBottomWidth: 1,
-    borderBottomColor: "white"
+    borderBottomColor: "lightgrey"
+  },
+   nameRow: {
+    flex: 1,
+    paddingVertical: 14,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   container: {
     backgroundColor: "#fff",
