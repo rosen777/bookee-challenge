@@ -14,7 +14,7 @@ export default class App extends Component {
                 {
                     name: "Sindey",
                     email: "anotherrollerinthenight@email.com",
-                    id: 3
+                    id: 2
                 },
                 {
                     name: "Kim",
@@ -113,12 +113,11 @@ export default class App extends Component {
               onRefresh={this.loadNewUsers}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => (
-                <View style={item.row}>
+                <View style={styles.row}>
                   <Text style={styles.CityN}>
                     {item.id} – {item.email}
                   </Text>
                   <Button
-                    style={styles.CityN}
                     title="Name"
                     onPress={() => alert(item.name)}
                   />
