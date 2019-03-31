@@ -25,6 +25,12 @@ Following this, run react-native run-android to view in an Android simulator.
 react-native run-android
 ```
 
+## UI Screenshot
+
+If everything works, the BookeeChallenge app should look and behave in the following manner:<br/>
+
+<img src='/images/bookee-challenge-screen.gif'/>
+
 ## Built With
 
 * [React Native 0.59.2](https://facebook.github.io/react-native/) - The framework for building native mobile apps used
