@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, View, Text, StyleSheet, FlatList, StatusBar} from 'react-native'
+import { ScrollView, Button, View, Text, StyleSheet, FlatList, StatusBar} from 'react-native'
 
 export default class App extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class App extends Component {
                 email: '',
             }
         }
-        // this.fetchCityTemp('London', 'UK')   
+
         this.fetchUsers()
     }
 
@@ -70,28 +70,29 @@ export default class App extends Component {
         fetch("https://jsonplaceholder.typicode.com/users")
           .then(res => res.json())
           .then(responseJson => {
-            var r = responseJson.main;
             var obj = responseJson;
             var user = {};
-            obj.forEach(function(obj) {
-               user = {
-                   email: obj.email,
-                   name: obj.name,
-                   id: obj.id
-               }
+            this.setState({
+              user: obj
             });
-            newList.push(user);
+
+            newList.push(this.state.user);
             this.setState({
               list: newList,
               refresh: false
             });
+            console.log('before', this.state.user)
             console.log("after", this.state.list);
           });
     }
 
     render() {
         return (
-          <View style={styles.container}>
+            <ScrollView 
+                onScrollEndDrag={this.loadNewUsers} 
+                refreshing={this.state.refresh}
+                onRefresh={this.loadNewUsers}
+            >
             <StatusBar barStyle="light-content" />
             <Text
               style={{
@@ -124,7 +125,7 @@ export default class App extends Component {
                 </View>
               )}
             />
-          </View>
+            </ScrollView>
         );
     }
 }
